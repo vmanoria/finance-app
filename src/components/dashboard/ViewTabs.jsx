@@ -4,6 +4,7 @@ const TABS = [
   { id: 'day',     label: 'Current Day' },
   { id: 'week',    label: 'Last 7 Days' },
   { id: 'quarter', label: 'Last Quarter' },
+  { id: 'custom',  label: 'Custom Ticker' },
 ];
 
 export default function ViewTabs({ activeTab, onTabChange }) {

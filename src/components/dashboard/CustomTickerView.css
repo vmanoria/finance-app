@@ -1,0 +1,118 @@
+.custom-view { }
+
+/* ── Search form ─────────────────────────────────────────────── */
+.custom-view__form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  max-width: 480px;
+}
+
+.custom-view__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 10px;
+}
+
+.custom-view__input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.custom-view__input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1f2328;
+  background: #ffffff;
+  transition: border-color 0.15s;
+}
+.custom-view__input:focus { border-color: #3b82d4; }
+.custom-view__input--error { border-color: #dc2626; }
+
+.custom-view__btn {
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background: #3b82d4;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.custom-view__btn:hover:not(:disabled) { background: #2563b0; }
+.custom-view__btn:disabled { background: #9ca3af; cursor: not-allowed; }
+
+.custom-view__input-error {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #dc2626;
+}
+
+/* ── Quote summary strip ─────────────────────────────────────── */
+.custom-view__results { }
+
+.custom-view__quote-strip {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 0 18px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.custom-view__ticker-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b82d4;
+}
+
+.custom-view__company-name {
+  font-size: 14px;
+  color: #57606a;
+}
+
+.custom-view__price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2328;
+  margin-left: auto;
+}
+
+.custom-view__change {
+  font-size: 14px;
+  font-weight: 600;
+}
+.custom-view__change.positive { color: #15803d; }
+.custom-view__change.negative { color: #dc2626; }
+
+.custom-view__mkt-state {
+  font-size: 11px;
+  font-weight: 600;
+  color: #57606a;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+/* ── Empty / hint state ──────────────────────────────────────── */
+.custom-view__hint {
+  color: #57606a;
+  font-size: 13px;
+  margin-top: 8px;
+}
