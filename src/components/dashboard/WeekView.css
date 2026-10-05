@@ -1,0 +1,45 @@
+/* ── 7-day change summary strip ─────────────────────────────────── */
+.week-summary {
+  margin-top: 4px;
+  background: #f7f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.week-summary__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #57606a;
+  margin-bottom: 10px;
+}
+.week-summary__row {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.week-summary__cell {
+  flex: 1 1 0;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 12px;
+  border-right: 1px solid #e5e7eb;
+}
+.week-summary__cell:last-child { border-right: none; }
+.week-summary__ticker {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.week-summary__pct {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.week-summary__price {
+  font-size: 11px;
+  color: #57606a;
+}

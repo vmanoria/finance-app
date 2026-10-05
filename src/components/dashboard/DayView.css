@@ -1,0 +1,71 @@
+/* ── Status bar ─────────────────────────────────────────────────── */
+.day-view__status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.day-view__status-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.day-view__mkt-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.day-view__mkt-badge--open  { background: #dcfce7; color: #15803d; }
+.day-view__mkt-badge--closed { background: #f3f4f6; color: #57606a; }
+
+.day-view__summary-counts {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.day-view__count--up   { color: #15803d; }
+.day-view__count--down { color: #b91c1c; }
+
+/* ── Featured IBM card ──────────────────────────────────────────── */
+.day-view__featured {
+  margin-bottom: 28px;
+}
+.day-view__featured-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #57606a;
+  margin-bottom: 8px;
+}
+.day-view__featured-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.day-view__featured-card {
+  max-width: 320px;
+}
+
+/* ── Competitors grid ───────────────────────────────────────────── */
+.day-view__grid-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #57606a;
+  margin-bottom: 8px;
+}
+.day-view__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}

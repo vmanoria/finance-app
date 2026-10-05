@@ -1,0 +1,24 @@
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 28px;
+}
+.view-tabs__tab {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #57606a;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s;
+}
+.view-tabs__tab:hover { color: #1f2328; }
+.view-tabs__tab--active {
+  color: #3b82d4;
+  border-bottom-color: #3b82d4;
+  font-weight: 600;
+}

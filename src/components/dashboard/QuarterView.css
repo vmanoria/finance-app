@@ -1,0 +1,85 @@
+/* ── Quarter heading ────────────────────────────────────────────── */
+.quarter-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.quarter-period-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* ── Rank table wrapper ─────────────────────────────────────────── */
+.rank-table-wrap {
+  margin-top: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.rank-table-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #57606a;
+  padding: 10px 14px;
+  background: #f7f8fa;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ── Rank table ─────────────────────────────────────────────────── */
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.rank-table th {
+  background: #f7f8fa;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #57606a;
+  font-size: 12px;
+}
+.rank-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+.rank-table tbody tr:last-child td { border-bottom: none; }
+.rank-table tbody tr:hover td { background: #fafafa; }
+
+.rank-table__rank {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  width: 28px;
+}
+.rank-table__ticker-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Change badge inside table */
+.rank-change-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.rank-change-badge--up   { background: #dcfce7; color: #15803d; }
+.rank-change-badge--down { background: #fee2e2; color: #b91c1c; }
+
+.muted { color: #57606a; }
