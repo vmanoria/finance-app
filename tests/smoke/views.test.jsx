@@ -11,6 +11,7 @@ import dashboardReducer from '../../src/store/dashboardSlice';
 import DayView from '../../src/components/dashboard/DayView';
 import WeekView from '../../src/components/dashboard/WeekView';
 import QuarterView from '../../src/components/dashboard/QuarterView';
+import CustomTickerView from '../../src/components/dashboard/CustomTickerView';
 
 function makeStore(preloadedState) {
   return configureStore({
@@ -86,10 +87,12 @@ const mockStatus = {
 
 const preloadedState = {
   dashboard: {
-    quotes:  mockQuotes,
-    history: mockHistory,
-    status:  mockStatus,
-    error:   { quotes: null, history: {} },
+    quotes:       mockQuotes,
+    history:      mockHistory,
+    status:       { ...mockStatus, customQuote: 'idle' },
+    error:        { quotes: null, history: {}, customQuote: null },
+    customTicker: null,
+    customQuote:  null,
   },
 };
 
@@ -168,5 +171,62 @@ describe('QuarterView smoke test', () => {
     const store = makeStore(preloadedState);
     render(<Provider store={store}><QuarterView /></Provider>);
     expect(screen.getAllByText('IBM').length).toBeGreaterThan(0);
+  });
+});
+
+// ─── CustomTickerView ─────────────────────────────────────────────────────────
+
+describe('CustomTickerView smoke test', () => {
+  it('renders without crashing and shows the heading', () => {
+    const store = makeStore(preloadedState);
+    render(<Provider store={store}><CustomTickerView /></Provider>);
+    expect(screen.getByRole('heading', { name: /custom ticker/i })).toBeInTheDocument();
+  });
+
+  it('renders the ticker input and submit button', () => {
+    const store = makeStore(preloadedState);
+    render(<Provider store={store}><CustomTickerView /></Provider>);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /load chart/i })).toBeInTheDocument();
+  });
+
+  it('shows hint text in idle state', () => {
+    const store = makeStore(preloadedState);
+    render(<Provider store={store}><CustomTickerView /></Provider>);
+    expect(screen.getByText(/enter any valid/i)).toBeInTheDocument();
+  });
+
+  it('renders quote strip and chart when data is loaded', () => {
+    const loadedState = {
+      dashboard: {
+        ...preloadedState.dashboard,
+        customTicker: 'TSLA',
+        customQuote: {
+          ticker: 'TSLA', name: 'Tesla Inc.', price: 250.00,
+          change: 3.50, pct: 1.42, pctFromOpen: 0.8,
+          open: 246.50, prevClose: 246.50, high: 251, low: 245,
+          week52High: 300, week52Low: 180,
+          volume: 80_000_000, avgVolume: 90_000_000,
+          marketCap: 800_000_000_000, marketState: 'REGULAR', error: null,
+        },
+        history: {
+          ...preloadedState.dashboard.history,
+          'TSLA:week': Array.from({ length: 5 }, (_, i) => ({
+            ticker: 'TSLA', date: `2024-0${i+1}-01`,
+            price: 250 + i, open: 249 + i, high: 252 + i, low: 248 + i,
+            volume: 5_000_000, pctFromBase: i === 0 ? 0 : i * 0.4,
+          })),
+        },
+        status: {
+          ...preloadedState.dashboard.status,
+          customQuote: 'ok',
+          history: { ...preloadedState.dashboard.status.history, 'TSLA:week': 'ok' },
+        },
+      },
+    };
+    render(<Provider store={makeStore(loadedState)}><CustomTickerView /></Provider>);
+    expect(screen.getByText('TSLA')).toBeInTheDocument();
+    expect(screen.getByText('Tesla Inc.')).toBeInTheDocument();
+    expect(screen.getByText('$250.00')).toBeInTheDocument();
   });
 });

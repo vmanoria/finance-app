@@ -26,19 +26,37 @@ export const fetchHistory = createAsyncThunk(
   }
 );
 
+export const fetchCustomQuote = createAsyncThunk(
+  'dashboard/fetchCustomQuote',
+  async (ticker, { rejectWithValue }) => {
+    try {
+      const map = await getQuotes([ticker]);
+      const quote = map[ticker];
+      if (quote?.error) return rejectWithValue(quote.error);
+      return quote;
+    } catch (err) {
+      return rejectWithValue(err.message ?? 'Failed to fetch quote');
+    }
+  }
+);
+
 // ─── Initial state ────────────────────────────────────────────────────────────
 
 const initialState = {
   quotes:  {},             // { [ticker]: NormalisedQuote }
   history: {},             // { [`${ticker}:${range}`]: HistoryPoint[] }
   status: {
-    quotes:  'idle',       // 'idle' | 'loading' | 'ok' | 'error'
-    history: {},           // { [`${ticker}:${range}`]: same }
+    quotes:       'idle',  // 'idle' | 'loading' | 'ok' | 'error'
+    history:      {},      // { [`${ticker}:${range}`]: same }
+    customQuote:  'idle',  // 'idle' | 'loading' | 'ok' | 'error'
   },
   error: {
-    quotes:  null,
-    history: {},           // { [`${ticker}:${range}`]: string | null }
+    quotes:      null,
+    history:     {},       // { [`${ticker}:${range}`]: string | null }
+    customQuote: null,
   },
+  customTicker: null,      // string | null — user-entered symbol
+  customQuote:  null,      // NormalisedQuote | null
 };
 
 // ─── Slice ────────────────────────────────────────────────────────────────────
@@ -57,6 +75,20 @@ const dashboardSlice = createSlice({
       delete state.history[key];
       delete state.status.history[key];
       delete state.error.history[key];
+    },
+    setCustomTicker(state, action) {
+      state.customTicker       = action.payload;
+      state.customQuote        = null;
+      state.status.customQuote = 'idle';
+      state.error.customQuote  = null;
+      // Clear any previously fetched history for custom tickers
+      for (const key of Object.keys(state.history)) {
+        if (key.startsWith('__custom__:')) {
+          delete state.history[key];
+          delete state.status.history[key];
+          delete state.error.history[key];
+        }
+      }
     },
   },
   extraReducers: builder => {
@@ -94,17 +126,37 @@ const dashboardSlice = createSlice({
           state.error.history[key]  = message ?? action.error.message;
         }
       });
+
+    // ── fetchCustomQuote ──────────────────────────
+    builder
+      .addCase(fetchCustomQuote.pending, state => {
+        state.status.customQuote = 'loading';
+        state.error.customQuote  = null;
+        state.customQuote        = null;
+      })
+      .addCase(fetchCustomQuote.fulfilled, (state, action) => {
+        state.status.customQuote = 'ok';
+        state.customQuote        = action.payload;
+      })
+      .addCase(fetchCustomQuote.rejected, (state, action) => {
+        state.status.customQuote = 'error';
+        state.error.customQuote  = action.payload ?? action.error.message;
+      });
   },
 });
 
-export const { resetQuotes, resetHistory } = dashboardSlice.actions;
+export const { resetQuotes, resetHistory, setCustomTicker } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
 
 // ─── Selectors ────────────────────────────────────────────────────────────────
 
-export const selectQuotes          = state => state.dashboard.quotes;
-export const selectHistory         = (ticker, range) => state => state.dashboard.history[`${ticker}:${range}`] ?? [];
-export const selectQuoteStatus     = state => state.dashboard.status.quotes;
-export const selectHistoryStatus   = (ticker, range) => state => state.dashboard.status.history[`${ticker}:${range}`] ?? 'idle';
-export const selectQuoteError      = state => state.dashboard.error.quotes;
-export const selectHistoryError    = (ticker, range) => state => state.dashboard.error.history[`${ticker}:${range}`] ?? null;
+export const selectQuotes             = state => state.dashboard.quotes;
+export const selectHistory            = (ticker, range) => state => state.dashboard.history[`${ticker}:${range}`] ?? [];
+export const selectQuoteStatus        = state => state.dashboard.status.quotes;
+export const selectHistoryStatus      = (ticker, range) => state => state.dashboard.status.history[`${ticker}:${range}`] ?? 'idle';
+export const selectQuoteError         = state => state.dashboard.error.quotes;
+export const selectHistoryError       = (ticker, range) => state => state.dashboard.error.history[`${ticker}:${range}`] ?? null;
+export const selectCustomTicker       = state => state.dashboard.customTicker;
+export const selectCustomQuote        = state => state.dashboard.customQuote;
+export const selectCustomQuoteStatus  = state => state.dashboard.status.customQuote;
+export const selectCustomQuoteError   = state => state.dashboard.error.customQuote;

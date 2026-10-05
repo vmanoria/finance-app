@@ -5,6 +5,7 @@ import ViewTabs from './components/dashboard/ViewTabs';
 import DayView from './components/dashboard/DayView';
 import WeekView from './components/dashboard/WeekView';
 import QuarterView from './components/dashboard/QuarterView';
+import CustomTickerView from './components/dashboard/CustomTickerView';
 import { isMarketOpen } from './utils/dateHelpers';
 import './App.css';
 
@@ -39,6 +40,7 @@ function AppShell() {
         {activeTab === 'day'     && <DayView />}
         {activeTab === 'week'    && <WeekView />}
         {activeTab === 'quarter' && <QuarterView />}
+        {activeTab === 'custom'  && <CustomTickerView />}
       </main>
 
       <footer className="app-footer">
